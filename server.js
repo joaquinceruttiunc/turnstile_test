@@ -14,6 +14,18 @@ app.post('/verify', (req, res) => {
   const token = req.body && req.body.token;
   const secret = process.env.TURNSTILE_SECRET;
 
+  // Log incoming request for debugging (mask most of the token)
+  try {
+    if (token) {
+      const masked = token.length > 16 ? token.slice(0, 8) + '...' + token.slice(-8) : token;
+      console.log('Incoming /verify token (masked):', masked, 'length:', token.length);
+    } else {
+      console.log('Incoming /verify with no token in body');
+    }
+  } catch (e) {
+    console.warn('Error logging incoming token:', e && e.message);
+  }
+
   if (!secret) {
     return res.status(500).json({ ok: false, error: 'TURNSTILE_SECRET no configurada en el servidor' });
   }
@@ -23,6 +35,12 @@ app.post('/verify', (req, res) => {
   }
 
   const postData = querystring.stringify({ secret, response: token });
+  // Log the post data length (don't print full secret)
+  try {
+    console.log('Posting to Turnstile: postData length', Buffer.byteLength(postData));
+  } catch (e) {
+    console.warn('Error logging postData info:', e && e.message);
+  }
 
   const options = {
     hostname: 'challenges.cloudflare.com',
