@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Turnstile</title>
+
+  <!-- Script de Turnstile -->
+  <!-- script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script -->
+</head>
+
+<body>
+  <h2>Prueba de Cloudflare Turnstile</h2>
+
+  <form id="form">
+    <div 
+      class="cf-turnstile"
+      data-sitekey="TU_SITE_KEY_AQUÍ"
+      data-callback="onTurnstileSuccess">
+    </div>
+
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script src="app.js"></script>
+</body>
+</html>
