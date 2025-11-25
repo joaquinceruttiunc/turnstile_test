@@ -1,3 +1,6 @@
+// Cargar variables desde .env en desarrollo
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const https = require('https');
