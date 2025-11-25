@@ -5,22 +5,25 @@
   <title>Test Turnstile</title>
 
   <!-- Script de Turnstile -->
-  <!-- script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script -->
+  <!-- carga el widget de Cloudflare Turnstile -->
 </head>
 
 <body>
-  <h2>Prueba de Cloudflare Turnstile</h2>
+<!-- Script de Turnstile -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
-  <form id="form">
-    <div 
-      class="cf-turnstile"
-      data-sitekey="TU_SITE_KEY_AQUÍ"
+<h2>Prueba Turnstile</h2>
+
+<form id="form">
+  <div class="cf-turnstile"
+      data-sitekey="0x4AAAAAACC23uS0gNS6KbCP"
       data-callback="onTurnstileSuccess">
-    </div>
+  </div>
 
-    <button type="submit">Enviar</button>
-  </form>
+  <button type="submit">Enviar</button>
+</form>
 
-  <script src="app.js"></script>
+<script src="app.js"></script>
+
 </body>
 </html>
