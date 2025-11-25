@@ -33,9 +33,30 @@ form.addEventListener("submit", async (e) => {
       throw new Error(`HTTP ${res.status} - ${text}`);
     }
 
-    const data = await res.json();
-    console.log("Respuesta del servidor:", data);
-    alert(JSON.stringify(data, null, 2));
+    // Protegernos contra respuestas vacías o no-JSON que causen JSON.parse errors
+    const contentType = res.headers.get('content-type') || '';
+    const contentLength = res.headers.get('content-length');
+
+    if (contentLength === '0') {
+      throw new Error('Respuesta vacía del servidor');
+    }
+
+    if (!contentType.includes('application/json')) {
+      // intentar leer como texto y mostrarlo para depuración
+      const text = await res.text();
+      try {
+        // intentar parsear por si acaso es JSON sin el header correcto
+        const maybe = JSON.parse(text);
+        console.log('Respuesta del servidor (parsed):', maybe);
+        alert(JSON.stringify(maybe, null, 2));
+      } catch (e) {
+        throw new Error('Se recibió respuesta no-JSON: ' + text);
+      }
+    } else {
+      const data = await res.json();
+      console.log("Respuesta del servidor:", data);
+      alert(JSON.stringify(data, null, 2));
+    }
   } catch (err) {
     console.error(err);
     alert('Error verificando Turnstile: ' + err.message);
